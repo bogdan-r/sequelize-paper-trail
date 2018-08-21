@@ -1,16 +1,19 @@
 'use strict';
-var sequelizePaperTrailOptions = require('config').get('sequelizePaperTrailOptions');
+const sequelizePaperTrailOptions = {
+  revisionAttribute: 'revision',
+  revisionModel: 'Revision',
+  revisionChangeModel: 'RevisionChange',
+  defaultAttributes: {
+    documentId: 'document_id',
+    revisionId: 'revision_id'
+  }
+};
 
 module.exports = {
   up: function (queryInterface, Sequelize) {
-    // Load default options.
-    sequelizePaperTrailOptions.defaultAttributes = {
-      documentId: 'document_id',
-      revisionId: 'revision_id'
-    };
 
     // Revision model
-    var attributes = {
+    const attributes = {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -22,7 +25,7 @@ module.exports = {
         allowNull: false
       },
       document: {
-        type: Sequelize.TEXT('MEDIUMTEXT'),
+        type: Sequelize.TEXT,
         allowNull: false
       },
       'user_id': {
@@ -62,11 +65,11 @@ module.exports = {
         allowNull: false
       },
       document: {
-        type: Sequelize.TEXT('MEDIUMTEXT'),
+        type: Sequelize.TEXT,
         allowNull: false
       },
       diff: {
-        type: Sequelize.TEXT('MEDIUMTEXT'),
+        type: Sequelize.TEXT,
         allowNull: false
       },
       revision_id: {
